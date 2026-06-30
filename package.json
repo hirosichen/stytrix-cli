@@ -1,6 +1,6 @@
 {
   "name": "stytrix",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "StyTrix CLI — design fashion with AI from your terminal or agent. A thin OAuth client for the StyTrix MCP server.",
   "type": "module",
   "bin": {

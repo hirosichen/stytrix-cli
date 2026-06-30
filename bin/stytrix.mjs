@@ -77,8 +77,22 @@ function waitForCallback(port) {
       if (u.pathname !== "/callback") { res.writeHead(404).end(); return; }
       const code = u.searchParams.get("code");
       const err = u.searchParams.get("error");
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(`<html><body style="font-family:system-ui;text-align:center;padding:48px"><h2>StyTrix CLI</h2><p>${code ? "✅ Signed in. You can close this tab and return to the terminal." : "❌ Sign-in failed: " + (err || "no code")}</p></body></html>`);
+      const ok = !!code;
+      const title = ok ? "Signed in to StyTrix" : "Sign-in failed";
+      const msg = ok
+        ? "You're all set. Close this tab and head back to your terminal."
+        : `Something went wrong (${err || "no authorization code"}). Please run \`stytrix login\` again.`;
+      const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} — StyTrix</title></head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#faf7f2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:#1a1a1a">
+  <div style="background:#fff;border:1px solid #ececec;border-radius:20px;padding:48px 40px;max-width:440px;text-align:center;box-shadow:0 12px 48px rgba(0,0,0,.07)">
+    <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;background:${ok ? "#eaf6ec" : "#fdecec"};color:${ok ? "#1f9d4d" : "#d23b3b"};font-size:32px;font-weight:700">${ok ? "&#10003;" : "&#10005;"}</div>
+    <h1 style="font-size:22px;margin:0 0 10px;font-weight:650;letter-spacing:-.01em">${title}</h1>
+    <p style="font-size:15px;line-height:1.55;color:#5f5f5f;margin:0">${msg}</p>
+    <div style="margin-top:30px;padding-top:20px;border-top:1px solid #f0f0f0;font-size:13px;color:#b0b0b0;letter-spacing:.06em;text-transform:uppercase">StyTrix &middot; AI Fashion Design</div>
+  </div>
+</body></html>`;
+      res.writeHead(ok ? 200 : 400, { "Content-Type": "text/html; charset=utf-8" });
+      res.end(html);
       server.close();
       if (code) resolve(code); else reject(new Error(err || "no authorization code"));
     });
