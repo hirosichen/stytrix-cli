@@ -1,0 +1,32 @@
+{
+  "name": "stytrix",
+  "version": "0.1.0",
+  "description": "StyTrix CLI — design fashion with AI from your terminal or agent. A thin OAuth client for the StyTrix MCP server.",
+  "type": "module",
+  "bin": {
+    "stytrix": "bin/stytrix.mjs"
+  },
+  "files": [
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "stytrix",
+    "fashion",
+    "ai",
+    "mcp",
+    "fashion-design",
+    "cli"
+  ],
+  "homepage": "https://www.stytrix.com/mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hirosichen/stytrix-cli.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  }
+}
